@@ -80,6 +80,14 @@ class Calculator:
         for i in range(4):
             button_frame.grid_columnconfigure(i, weight=1)
     
+    def programmer_calculation(self, expression):
+        """Perform programmer calculations"""
+        try:
+            result = eval(expression)
+            return result
+        except:
+            return None
+    
     def on_button_click(self, char):
         """Handle button clicks"""
         if char == "C":
@@ -92,13 +100,13 @@ class Calculator:
             self.display.delete(0, tk.END)
             self.display.insert(0, self.expression)
         elif char == "=":
-            # Calculate result
-            try:
-                result = eval(self.expression)
+            # Calculate result by calling programmer_calculation
+            result = self.programmer_calculation(self.expression)
+            if result is not None:
                 self.display.delete(0, tk.END)
                 self.display.insert(0, str(result))
                 self.expression = str(result)
-            except:
+            else:
                 self.display.delete(0, tk.END)
                 self.display.insert(0, "Error")
                 self.expression = ""
